@@ -26,6 +26,4 @@ class ProductPage(BasePage):
 
     def compare_the_amount(self, message_with_amount):
         product_amount = self.browser.find_element(*ProductPageLocators.PRICE_FROM_PRODUCT)
-        print(message_with_amount)
-        print(product_amount.text)
         assert product_amount.text in message_with_amount, "The amount is different"
