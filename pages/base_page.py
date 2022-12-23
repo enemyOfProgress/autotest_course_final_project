@@ -11,7 +11,7 @@ class BasePage:
     def __init__(self, browser, url, timeout=10):
         self.browser = browser
         self.url = url
-        self.browser.implicitly_wait(timeout)
+        # self.browser.implicitly_wait(timeout)
 
     def open(self):
         self.browser.get(self.url)
@@ -40,8 +40,19 @@ class BasePage:
 
     def is_not_element_presented(self, by, locators, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((by, locators)))
+            WebDriverWait(self.browser, timeout)\
+                .until(EC.presence_of_element_located((by, locators)))
         except TimeoutException:
             return True
 
         return False
+
+    def is_disappeared(self, by, locators, timeout=4):
+        try:
+            WebDriverWait(self.browser, timeout, 1, TimeoutException)\
+                .until_not(EC.presence_of_element_located((by, locators)))
+        except TimeoutException:
+            return False
+
+        return True
+
