@@ -1,5 +1,3 @@
-import time
-
 from .pages.product_page import ProductPage
 from .pages.locators import ProductPageLocators
 
@@ -18,7 +16,6 @@ def test_guest_can_add_product_to_basket(browser):
     amount = browser.is_message_visible(*ProductPageLocators.MESSAGE_WITH_AMOUNT)
     # Compare amount in cart and product amount
     browser.compare_the_amount(amount)
-    time.sleep(0)
 
 
 def open_basket_page(browser):
