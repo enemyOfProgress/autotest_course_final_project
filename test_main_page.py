@@ -6,26 +6,24 @@ from .pages.basket_page import BasketPage
 
 
 def test_guest_can_go_to_login_page(browser):
-    page = open_browser(browser)
-    login_page = page.go_to_login_page()
+    browser = open_browser(browser, MainPage)
+    login_page = browser.go_to_login_page()
     login_page.should_be_login_page()
 
 
 def test_guest_should_see_login_link(browser):
-    page = open_browser(browser)
-    page.should_be_login_link()
+    browser = open_browser(browser, MainPage)
+    browser.should_be_login_link()
 
 
 def test_guest_cant_see_product_in_basket_opened_from_main_page(browser):
-    browser = open_browser(browser)
+    browser = open_browser(browser, BasketPage)
     browser.go_to_the_basket()
-    new_link = browser.get_current_url()
-    page = BasketPage(browser, new_link)
-    page.browser.is_basket_empty()
+    browser.is_basket_empty(*BasketPageLocators.EMPTY_BASKET)
 
 
-def open_browser(browser):
+def open_browser(browser, page):
     link = "http://selenium1py.pythonanywhere.com/"
-    page = MainPage(browser, link)
-    page.open()
-    return page
+    browser = page(browser, link)
+    browser.open()
+    return browser
